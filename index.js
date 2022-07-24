@@ -11,9 +11,9 @@ app.use(bodyParser.json());
 app.use(cors());
 const port = 3200;
 
-// app.get('/', (req, res) => {
-//   res.send('Hello World!')
-// })
+app.get('/', (req, res) => {
+  res.send('Hello Database!')
+})
 
 
 
