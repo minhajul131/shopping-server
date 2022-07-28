@@ -32,9 +32,9 @@ client.connect(err => {
 
   app.get('/products', (req, res) => {
     productscollection.find({})
-    .toArray((err, documents) => {
+    .toArray((err, document) => {
       console.log(err)
-      res.send(documents);
+      res.send(document);
     })
   })
 
