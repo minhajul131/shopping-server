@@ -2,7 +2,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors');
 require('dotenv').config()
-const { MongoClient, ServerApiVersion } = require('mongodb');
+// const { MongoClient, ServerApiVersion } = require('mongodb');
+const MongoClient = require('mongodb').MongoClient;
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.lw8h6rv.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 const app = express()
@@ -16,8 +17,8 @@ app.get('/', (req, res) => {
 })
 
 
-
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true});
+const client = new MongoClient(uri, { useUnifiedTopology: true}, { useNewUrlParser: true }, { connectTimeoutMS: 30000 }, { keepAlive: 1});
+// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true});
 client.connect(err => {
   const productscollection = client.db("shoppingfull").collection("products");
   const ordersCollection = client.db("shoppingfull").collection("orders");
