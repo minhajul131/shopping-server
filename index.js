@@ -33,6 +33,7 @@ client.connect(err => {
   app.get('/products', (req, res) => {
     productscollection.find({})
     .toArray((err, documents) => {
+      console.log(err)
       res.send(documents);
     })
   })
