@@ -7,10 +7,11 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 
 const uri = `mongodb+srv://shopping:shopping123@cluster0.lw8h6rv.mongodb.net/shoppingfull?retryWrites=true&w=majority`;
 const app = express()
+console.log("the :" ,uri)
 
 app.use(bodyParser.json());
 app.use(cors());
-const port = 3200;
+const port = 5000;
 
 app.get('/', (req, res) => {
   res.send('Hello Database!')
@@ -20,6 +21,7 @@ app.get('/', (req, res) => {
 // const client = new MongoClient(uri, { useUnifiedTopology: true}, { useNewUrlParser: true }, { connectTimeoutMS: 30000 }, { keepAlive: 1});
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 client.connect(err => {
+  console.log("err",err);
   const productscollection = client.db("shoppingfull").collection("products");
   const ordersCollection = client.db("shoppingfull").collection("orders");
   
@@ -33,9 +35,9 @@ client.connect(err => {
 
   app.get('/products', (req, res) => {
     productscollection.find({})
-    .toArray((err, document) => {
-      console.log(err)
-      res.send(document);
+    .toArray((err, documents) => {
+      console.log("douc",documents)
+      res.send(documents);
     })
   })
 
@@ -58,7 +60,7 @@ client.connect(err => {
     const order = req.body;
     ordersCollection.insertOne(order)
     .then(result => {
-      console.log(result)
+      // console.log(result)
       res.send(result.insertedCount > 0)
     })
   })
